@@ -1,0 +1,48 @@
+데이터베이스
+
+머신러닝에 사용할 목적으로 데이터를 수집할때 데이터를 어떻게 모아둘까 라는것이 굉장히 중요한 문제임
+
+규모가 그렇게 크지않은 데이터라면 csv 와 json 형식을 사용해도됨
+
+하지만 데이터의 규모가 크거나 복잡하면 데이터베이스를 사용하는 것이 편리함
+
+SQL lite , MySQL 예제 
+
+sqlite 는 sqlite3 py 파일 참조
+
+
+MySQL 사용하기
+docker 에서 python + MySQL 환경준비
+
+#Docker 에 Ubuntu 이미지 설치 
+docker pull ubuntu:16.04 설치 되어있음
+#Ubuntu 실행 
+docker run -it ubuntu:16.04
+
+#MySQL 설치
+apt-get install -y mysql-server 
+root 비밀번호 root
+
+#파이썬에서 MySQL 접속할때 사용할 mysqlclient 를 pip 명령어로 설치
+apt-get install -y libmysqlclient-dev
+
+pip3 install mysqlclient
+
+ubuntu-mysql 로 저장 할거임
+docker ps -a
+docker commit 컨테이너아이디 ubuntu-mysql
+
+docker run -i -t  -e ko_KR.UTF_8 -e PYTHONENCODING=utf-8 ubuntu-mysql /bin/bash
+
+#접속후 
+service mysql start
+
+mysql -u root -p 
+
+#데이터베이스 생성
+
+CREATE DATABASE test
+
+#데이터 베이스 생성후 
+mysql 과 파이썬연결
+mysql-test.py

@@ -1,0 +1,192 @@
+﻿##selenium
+자바스크립트를 많이 사용하느 웹사이트는 웹브라우저를 사용하지 않을경우 제대로 동작을 확인할수 없음
+따라서 웹브라우저를 원격으로 조작하는 방식을 사용해 봄
+
+웹브라우저를 원격조작할때 사용되는 도구로 selenium이 있음
+일반적으로 웹어플리케이션 테스트를 자동화 할때 사용
+
+스크레이핑때도 이용할수 있음
+
+selenium을 이용하면자동으로 url 열수있고 스크롤 문자입력 등등 다양한 조작을 자동화할수있고 화면 캡처해서 이미지 저장 , html특정부분 꺼내는것도 가능
+
+##PhantomJS 
+
+팬텀은 명령줄에서 사용할수잇는 웹브라우저임 
+레이아웃 엔진으로 webkit 을 사용함
+웹킷은 애플에서 만든 웹브라우저인 사파리의 렌더링 엔진임
+
+팬텀은 자바스크립트 엔진으로 javascriptcore를 사용하고 있음
+
+팬텀제이에스를 이용하면 명령줄에서 웹브라우저를 조작할수 있음
+
+
+
+#방화벽때문에 tcp  안됨
+#Docker에 Ubuntu 이미지 가져오기
+
+docker pull ubuntu
+
+#우분투 실행 셀들어가기
+
+docker run -it ubuntu
+
+#파이썬3 pip3 설치
+
+apt-get update
+apt-get install -y python3 python3-pip
+
+
+#selenium 설치
+pip3 install selenium
+
+#Beautifulsoup4 설치
+pip3 install beautifulsoup4
+
+
+#PhantomJS 에 필요한 라이브러리 설치
+apt-get install -y wget libfontconfig
+#바이너리를 내려받고 설치하기
+mkdir -p /home/root/src && cd $_
+wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+tar jxvf phantomjs-2.1.1-linux-x86_64.tar.bz2
+cd phantomjs-2.1.1-linux-x86_64/bin/
+cp phantomjs /usr/local/bin/
+
+#한글 폰트 설치
+apt-get install -y font-nanum*
+
+#docker 컨테이너 확인
+docker ps -a
+
+#이미지 커밋
+docker commit 컨테이너ID ubuntu-phantomjs
+
+생성
+docker run -i -t -v $HOME:$HOME \ -e ko_KR.UTF_8 \ ubuntu-phantomjs /bin/bash
+docker run -i -t  -e ko_KR.UTF_8 -e PYTHONENCODING=utf-8 ubuntu-phantomjs /bin/bash
+시작 
+
+docker start container name
+docker stop 
+docker restart
+ 
+실행중인 컨테이너 접속
+
+docker attach <container name>
+
+예제 
+selenium-capture.py
+
+실행
+python3 selenium-capture.py 실행하면 
+Website.png 이미지 생성 
+
+도커안에 있는 파일을 host 컴으로 복사할때 
+
+docker cp 컨테이너ID:도커파일경로 host경로
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+1.Selenium으로 DOM 요소를 선택하는 방법
+
+DOM내부에 있는 여러개의 요소중 처음 찾아지는 요소를 추출: 
+
+find_element_by_id(id)                      id 속성으로 요소를 하나 추출
+find_element_by_name(name)                  name 속성으로 요소를 하나 추출
+find_element_by_css_selector(query)         CSS 선택자로 요소를 하나 추출
+find_element_by_xpath(query)                Xpath를 지정해 요소를 하나 추출
+find_element_by_tag_name(name)              태그 이름이 name에 해당하는 요소를 하나 추출함
+find_element_by_link_text(text)             링크 텍스트로 요소를 추출함
+find_element_by_partial_link_text(text)     링크의 자식요소에 포함돼있는 텍스트로 요소를 하나추출함
+find_element_by_class_name(name)            클래스 이름 name 해당하는 요소를 추출함
+
+
+DOM내부에 있는ㄴ 모든 요소추출
+
+find_elements_by_css_selectort(query)       CSS선택자로 요소를 여러개 추출함
+find_elements_by_xpath(query)               Xpath를 지정해 요소를 여러개 추출함
+find_elements_by_tag_name(name)             tag를 지정해 요소를 여러개 추출함
+find_elements_by_class_name(name)           class를 지정해 요소를 여러개 추출함
+find_elements_by_partial_link_text(text)    링크의 자식요소에 포함되어있는 텍스트로 요소를 여러개 추출함
+
+
+2.Selenium으로 요소 조작하기 
+
+clear() 글자를 입력할수 있는 요소의 글자를 지움
+click() 요소 클릭
+get_attribute(name) 요소의 속성중 name에 해당하는 속성 값 추출
+is_displayed() 요소가 화면에 출력되는지 확인
+is_enabled() 요소가 활성화 되어있는지 확인
+is_selected() 체크박스 등의 요소가 선택된 상태인지 확인함
+screenshot(filename)  스크린샷찍음
+send_keys(value) 키를 입력함
+submit() 입력 양식을 전송함
+value_of_csss_property(name)  name에 해당하는 css속성의 값을 추출
+id id속성
+location 요소의 위치
+parent 요소의 부모 
+rect 크기와 위치정보를 가진 딕셔너리 자료형을 리턴함
+screenshot_as_base64 스크린샷을 Base64로 추출함
+screenshot_as_png 스크린샷을 png 형식의 바이너리로 추출함
+size 요소의 크기
+tag_name 태그 이름
+text 요소 내부의 글자
+
+
+3. send_keys() 텍스트 데이터 외에도 특수키를 입력할수있음
+사용하려면 아래 모듈 적용
+from selenium.Webdriver.common.keys import keys
+
+ARROW_DOWN, ARROW_UP ....
+BACKSPACE, DELETE ....
+ALT,COMMAND,....
+ENTER,ESCAPE ....
+F1 ,F2....
+
+
+4. selenium 드라이버 조적
+PhantomJS 전용 드라이버 객체는 아래와 같은 메서드 사용가능 , 대표적인 몇가지 정리
+
+add_cookie(cookie_dict) 쿠키값을 딕셔너리 형식으로 지정
+back(), forward() 이전 페이지 다음페이지
+close() 브라우저 닫기
+current_url 현재 url 추출
+delete_all_cookies() 모든 쿠키 제거
+delete_cookie(name) 특정 쿠키 제거
+execute(command,paras) 브라우저 고유의 명령어 실행
+execute_async_script(script,*args) //비동기 처리 자바스크립트 실행
+execute_script(script,*args) //동기 처리하는 자바스크립트 실행
+get(url)  웹페이지 읽어 드림
+get_cookie(name) 특정 쿠키 값 추출
+get_cookis() 모든 쿠키 값 딕셔너리 형식으로 추출
+get_log(type) 로그를 추출
+get_screenshot_as_base64() base64 형식으로 스크린샷 추출
+get_screenshot_as_file(filename) 스크린샷파일 저장
+get_screenshot_as_png   png 형식으로 스크린샷의 바이너리 추출
+get_window_position(windowHandle='current') 브라우저의 위치를 추출합니다
+get_window_size(windowHandle='current') 브라우저의 크기를 추출합니다
+implicitly_wait(sec)   최대 대기시간을 초단위로 지정해서 처리가 끝날떄 까지 대기시간을
+quit()   드라이버 종료시켜 브라우저 닫음
+save_screenshot(filename)  스크린샷을 저장합니다
+set_page_load_timeout(time_to_wait) 페이지를 읽는 타임아웃시간 지정
+set_script_timeout(time_to_wait) 스크립트의 타임아웃 시간을 지정
+set_window_position(x,y,windowHandle='current') 브라우저의 위치를 지정
+set_window_siz(width,height,windowHandle='current')  브라우저의 크기를 지정
+title 현재 페이지의 타이틀을 추출함
+
+
+### 책 예제 키인데 이것은 본인의 키로 변경해서 사용할것
+api_key=474d59dd890c4108f62f192e0c6fce01
